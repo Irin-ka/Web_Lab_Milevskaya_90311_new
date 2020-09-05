@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Web_Lab_Milevskaya_90311.DAL.Entities;
+using Web_Lab_Milevskaya_90311.Extensions;
 using Web_Lab_Milevskaya_90311.Models;
 
 namespace Web_Lab_Milevskaya_90311.Controllers
@@ -16,7 +17,8 @@ namespace Web_Lab_Milevskaya_90311.Controllers
             _pageSize = 3;
             SetupData();
         }
-
+        [Route("Catalog")]
+        [Route("Catalog/Page_{pageNo}")]
         public IActionResult Index(int? group, int pageNo= 1)
         {
             var dishesFiltered = _dishes
@@ -26,8 +28,15 @@ namespace Web_Lab_Milevskaya_90311.Controllers
 
             // Получить id текущей группы и поместить в TempData 
             ViewData["CurrentGroup"] = group ?? 0;
-            return View(ListViewModel<Dish>.GetModel(dishesFiltered, pageNo,
-            _pageSize));
+
+            var model = ListViewModel<Dish>.GetModel(dishesFiltered, pageNo,_pageSize);
+            if (Request.IsAjaxRequest())
+                return PartialView("_listpartial", model);
+            else
+                return View(model);
+
+            //return View(ListViewModel<Dish>.GetModel(dishesFiltered, pageNo,
+            //_pageSize));
         }
 
 
@@ -53,7 +62,7 @@ namespace Web_Lab_Milevskaya_90311.Controllers
                     Description = "Большая тарелка с ягодами",
                     Calories = 200,
                     DishGroupId = 4,
-                    Image = "222.png"
+                    Image = "121.png"
                 },
                 new Dish
                 {
@@ -62,7 +71,7 @@ namespace Web_Lab_Milevskaya_90311.Controllers
                     Description = "С ягодами, без сметаны",
                     Calories = 330,
                     DishGroupId = 3,
-                    Image = "333.png"
+                    Image = "131.png"
                 },
                 new Dish
                 {
@@ -71,7 +80,7 @@ namespace Web_Lab_Milevskaya_90311.Controllers
                     Description = "Мороженое - 80%, фрукты и ягоды - 20%",
                     Calories = 635,
                     DishGroupId = 4,
-                    Image = "444.png"
+                    Image = "141.png"
                 },
                 new Dish
                 {
@@ -80,7 +89,7 @@ namespace Web_Lab_Milevskaya_90311.Controllers
                     Description = "Запеченый на гриле",
                     Calories = 524,
                     DishGroupId = 3,
-                    Image = "555.png"
+                    Image = "151.png"
                 },
                 new Dish
                 {
@@ -89,7 +98,7 @@ namespace Web_Lab_Milevskaya_90311.Controllers
                     Description = "Сметана в качестве соуса",
                     Calories = 180,
                     DishGroupId = 1,
-                    Image = "666.png"
+                    Image = "161.png"
                 }
             };
         }

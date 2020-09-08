@@ -1,22 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Web_Lab_Milevskaya_90311.DAL.Data;
 using Web_Lab_Milevskaya_90311.DAL.Entities;
 
 namespace Web_Lab_Milevskaya_90311.Tests
 {
     public class TestData
     {
-        public static List<Dish> GetDishesList()
+        public static void FillContext(ApplicationDbContext context)
         {
-            return new List<Dish>
+            context.DishGroups.Add(new DishGroup
+            { GroupName = "fake group" });
+            context.AddRange(new List<Dish>
                 {
                     new Dish{ DishId=1, DishGroupId=4},
                     new Dish{ DishId=2, DishGroupId=3},
                     new Dish{ DishId=3, DishGroupId=4},
                     new Dish{ DishId=4, DishGroupId=3},
                     new Dish{ DishId=5, DishGroupId=1}
-                };
+                });
+            context.SaveChanges();
         }
         public static IEnumerable<object[]> Params()
         {

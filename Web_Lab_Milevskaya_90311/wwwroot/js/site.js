@@ -16,6 +16,6 @@ $(document).ready(function () {
         // выделить текущую кнопку 
         $(this).parent().addClass("active");
         // изменить адрес в адресной строке браузера
-        ry.pushState(null, null, uri);
+        history.pushState(null, null, uri);
     });
 });

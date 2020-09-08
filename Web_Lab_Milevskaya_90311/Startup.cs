@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 
 using Web_Lab_Milevskaya_90311.DAL.Data;
 using Web_Lab_Milevskaya_90311.DAL.Entities;
+using Web_Lab_Milevskaya_90311.Models;
 using Web_Lab_Milevskaya_90311.Services;
 
 namespace Web_Lab_Milevskaya_90311
@@ -29,6 +32,16 @@ namespace Web_Lab_Milevskaya_90311
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDistributedMemoryCache();
+            services.AddSession(opt =>
+            {
+                opt.Cookie.HttpOnly = true;
+                opt.Cookie.IsEssential = true;
+            });
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();                     // йсдю днаюбхрэ рн? мс б йсдю?
+            services.AddScoped<Cart>(sp => CartService.GetCart(sp));
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -69,6 +82,7 @@ namespace Web_Lab_Milevskaya_90311
 
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

@@ -72,19 +72,19 @@ namespace Web_Lab_Milevskaya_90311.Services
                 {
                 new Dish {DishName="Фруктовая тарелка",
                 Description="Большая тарелка с ягодами",
-                Calories =200, DishGroupId=4, Image="121.jpg" },
+                Calories =200, DishGroupId=4, Image="121.png" },
                 new Dish {DishName="Блины",
                 Description="С ягодами, без сметаны",
-                Calories =330, DishGroupId=3, Image="131.jpg" },
+                Calories =330, DishGroupId=3, Image="131.png" },
                 new Dish {DishName="Мороженое",
                 Description="Мороженое - 80%, фрукты и ягоды - 20%",
-                Calories =635, DishGroupId=4, Image="141.jpg" },
+                Calories =635, DishGroupId=4, Image="141.png" },
                 new Dish {DishName="Стейк из свинины",
                 Description="Запеченый на гриле",
-                Calories =524, DishGroupId=3, Image="151.jpg" },
+                Calories =524, DishGroupId=3, Image="151.png" },
                 new Dish {DishName="Фруктово-овощная нарезка",
                 Description="В комплексе сметанный соус",
-                Calories =180, DishGroupId=1, Image="161.jpg" }
+                Calories =180, DishGroupId=1, Image="161.png" }
                 });
                 await context.SaveChangesAsync();
             }

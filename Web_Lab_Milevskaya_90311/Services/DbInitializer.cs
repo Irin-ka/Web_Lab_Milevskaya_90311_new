@@ -50,7 +50,46 @@ namespace Web_Lab_Milevskaya_90311.Services
                 admin = await userManager.FindByEmailAsync("admin@mail.ru");
                 await userManager.AddToRoleAsync(admin, "admin");
             }
-        }
 
+            if (!context.DishGroups.Any())
+            {
+                context.DishGroups.AddRange(
+                new List<DishGroup>
+                {
+                new DishGroup {GroupName="Салаты"},
+                new DishGroup {GroupName="Супы"},
+                new DishGroup {GroupName="Основные блюда"},
+                new DishGroup {GroupName="Десерты"}
+                });
+                await context.SaveChangesAsync();
+            }
+
+            // проверка наличия объектов 
+            if (!context.Dishes.Any())
+            {
+                context.Dishes.AddRange(
+                new List<Dish>
+                {
+                new Dish {DishName="Фруктовая тарелка",
+                Description="Большая тарелка с ягодами",
+                Calories =200, DishGroupId=4, Image="121.jpg" },
+                new Dish {DishName="Блины",
+                Description="С ягодами, без сметаны",
+                Calories =330, DishGroupId=3, Image="131.jpg" },
+                new Dish {DishName="Мороженое",
+                Description="Мороженое - 80%, фрукты и ягоды - 20%",
+                Calories =635, DishGroupId=4, Image="141.jpg" },
+                new Dish {DishName="Стейк из свинины",
+                Description="Запеченый на гриле",
+                Calories =524, DishGroupId=3, Image="151.jpg" },
+                new Dish {DishName="Фруктово-овощная нарезка",
+                Description="В комплексе сметанный соус",
+                Calories =180, DishGroupId=1, Image="161.jpg" }
+                });
+                await context.SaveChangesAsync();
+            }
+
+
+        }
     }
 }

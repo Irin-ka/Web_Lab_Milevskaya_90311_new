@@ -50,9 +50,7 @@ namespace Web_Lab_Milevskaya_90311
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext context,
             UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
-            DbInitializer.Seed(context, userManager, roleManager)
-                    .GetAwaiter()
-                    .GetResult();
+            DbInitializer.Seed(context, userManager, roleManager).GetAwaiter().GetResult();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

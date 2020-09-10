@@ -21,6 +21,14 @@ namespace Web_Lab_Milevskaya_90311
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                })
+            .ConfigureLogging(lp =>
+            {
+                lp.ClearProviders();
+                lp.AddFilter("Microsoft", LogLevel.None);
+
+
+
+            });
     }
 }

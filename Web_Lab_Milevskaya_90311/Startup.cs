@@ -12,9 +12,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using Microsoft.Extensions.Logging;
 using Web_Lab_Milevskaya_90311.DAL.Data;
 using Web_Lab_Milevskaya_90311.DAL.Entities;
+using Web_Lab_Milevskaya_90311.Extensions;
 using Web_Lab_Milevskaya_90311.Models;
 using Web_Lab_Milevskaya_90311.Services;
 
@@ -61,8 +62,10 @@ namespace Web_Lab_Milevskaya_90311
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext context,
-            UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+            UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, ILoggerFactory logger)
         {
+            logger.AddFile("Logs/log-{Date}.txt");
+
             DbInitializer.Seed(context, userManager, roleManager).GetAwaiter().GetResult();
             if (env.IsDevelopment())
             {
@@ -75,6 +78,7 @@ namespace Web_Lab_Milevskaya_90311
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseFileLogging();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
